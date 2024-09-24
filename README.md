@@ -15,6 +15,7 @@ Create a file called ``constants.py`` and put this in it:
 
 ```py
 OPENROUTER_API_KEY = "API KEY FOR OPENROUTER HERE"
+DISCORD_TOKEN = "DISCORD TOKEN FOR WHALEINATOR BOT HERE"
 ```
 
 Then run

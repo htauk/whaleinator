@@ -1,26 +1,34 @@
-from openai import OpenAI
-from constants import OPENROUTER_API_KEY
+import discord
+from constants import DISCORD_TOKEN
+from api import requestIfWhale
 
-client = OpenAI(
-  base_url="https://openrouter.ai/api/v1",
-  api_key=OPENROUTER_API_KEY # make a file called constants.py to store the api key
-)
 
-completion = client.chat.completions.create(
-  extra_headers={
-    "HTTP-Referer": "https://github.com/htauk",
-    "X-Title": "Whaleinator",
-  },
-  model="deepseek/deepseek-chat",
-  messages=[
-    {
-      "role": "system",
-      "content": "You are an AI made to only say 'whale' or 'NO'. You are given questions. say whale if it's a stupid question, and NO if it's a good question. For example: 'how to I reenroll' say 'whale', 'how do I unenroll using bookmarklets' say 'whale' THIS IS IN A CHROMEBOOK HACKING CONTEXT. if they say 'how do i do this on so and so' its whale",
-    },
-    {
-      "role": "user",
-      "content": "how do i do this on windows?",
-    },
-  ],
-)
-print(completion.choices[0].message.content)
+def is_question(s):
+    question_initiators = ("who", "what", "where", "when", "why", "how", "isnt", "isn't")
+    
+
+    starts_with_initiator = s.lower().startswith(question_initiators)
+    
+    contains_question_mark = "?" in s
+    
+    return starts_with_initiator or contains_question_mark
+
+class MyClient(discord.Client):
+    async def on_ready(self):
+        print(f'Logged on as {self.user}!')
+
+    async def on_message(self, message):
+        if message.author == client.user:
+            return
+        if is_question(message.content):
+            print("is a question")
+            if requestIfWhale(message.content):
+                await message.add_reaction('🐳')
+            else:
+                await message.reply("valid question")
+
+
+intents = discord.Intents.all()
+
+client = MyClient(intents=intents)
+client.run(DISCORD_TOKEN)
