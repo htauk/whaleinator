@@ -14,8 +14,12 @@ completion = client.chat.completions.create(
   model="deepseek/deepseek-chat",
   messages=[
     {
+      "role": "system",
+      "content": "You are an AI made to only say 'whale' or 'NO'. You are given questions. say whale if it's a stupid question, and NO if it's a good question. For example: 'how to I reenroll' say 'whale', 'how do I unenroll using bookmarklets' say 'whale' THIS IS IN A CHROMEBOOK HACKING CONTEXT. if they say 'how do i do this on so and so' its whale",
+    },
+    {
       "role": "user",
-      "content": "Say this is a test",
+      "content": "how do i do this on windows?",
     },
   ],
 )
