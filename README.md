@@ -1,4 +1,4 @@
-<img alt="Whale Emoji" src="https://em-content.zobj.net/source/twitter/185/spouting-whale_1f433.png" height=250px width=250px>
+<img alt="Whale Emoji" src="/assets/README/whale.png" height=250px width=250px>
 
 # Whaleinator
 ![Built with Python](assets/README/python_vector.svg)
